@@ -3,6 +3,8 @@ import type { Gpts } from "../types/gpts"
 export const getGpts = async (): Promise<Gpts[]> => {
   try {
     const uri = `${process.env.PLASMO_PUBLIC_INDEX_API_BASE_URI}/gpts/random?from=extension`
+    console.log("fetching gpts from:", uri)
+    return [];
     const resp = await fetch(uri)
     if (resp.ok) {
       const json = await resp.json()

@@ -10,14 +10,15 @@ import { useRef, useState } from "react"
 
 import { sendToBackground } from "@plasmohq/messaging"
 
-import type { Gpts } from "~/types/gpts"
-
 interface Props {
-  setGpts: Dispatch<SetStateAction<Gpts[]>>
-  setLoading: Dispatch<SetStateAction<boolean>>
+  currentPage: boolean;
+  webSearch: boolean;
+  libQuery: boolean;
+  clip: boolean;
+  setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
-export default ({ setGpts, setLoading }: Props) => {
+export default ({currentPage, webSearch, libQuery, clip, setLoading }: Props) => {
   const [inputDisabled, setInputDisabled] = useState(false)
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [content, setContent] = useState("")
@@ -45,9 +46,9 @@ export default ({ setGpts, setLoading }: Props) => {
     })
     setLoading(false)
     if (resp && resp.data) {
-      setGpts(resp.data)
+      // setGpts(resp.data)
     } else {
-      setGpts([])
+      // setGpts([])
     }
   }
 
@@ -65,7 +66,7 @@ export default ({ setGpts, setLoading }: Props) => {
         <div className="flex items-center">
           <input
             type="text"
-            className="flex-1 px-4 py-2 border-2 border-[#2752f4] bg-white rounded-lg"
+            className="flex-1 px-4 py-2 border-2 border-[#e5e8f3] bg-white rounded-lg"
             placeholder="chat for searching GPTs"
             ref={inputRef}
             value={content}

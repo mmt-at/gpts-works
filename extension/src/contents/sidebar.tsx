@@ -5,8 +5,11 @@ import { useEffect, useRef, useState } from "react"
 import { sendToBackground } from "@plasmohq/messaging"
 import { useMessage } from "@plasmohq/messaging/hook"
 
+import Clipper from "~components/Clipper"
 import GptsList from "~components/GptsList"
-import Search from "~components/Search"
+import ModeChoice from "~components/ModeChoice"
+import Search from "~components/SearchChat"
+import SearchChat from "~components/SearchChat"
 import type { Gpts } from "~types/gpts"
 
 export const config: PlasmoCSConfig = {
@@ -28,6 +31,10 @@ export default () => {
   const [loading, setLoading] = useState(false)
   const [showButton, setShowButton] = useState(true)
   const toggleRef = useRef(null)
+  const [currentPage, setCurrentPage] = useState(false)
+  const [webSearch, setWebSearch] = useState(false)
+  const [libQuery, setLibQuery] = useState(false)
+  const [clip, setClip] = useState(false)
 
   const fetchGpts = async () => {
     setLoading(true)
@@ -52,58 +59,82 @@ export default () => {
     }
   })
 
-  useEffect(() => {
-    if (window.location.href.startsWith("https://chat.openai.com/")) {
-      fetchGpts()
-      setShowButton(true)
-    } else {
-      setShowButton(false)
-    }
-  }, [window.location.href])
+  // useEffect(() => {
+  //   if (window.location.href.startsWith("https://www.perknown.com/")) {
+  //     // fetchGpts()
+  //     setShowButton(true)
+  //   } else {
+  //     setShowButton(false)
+  //   }
+  // }, [window.location.href])
 
   return (
     <div className="fixed top-0 right-0">
       <div className="drawer open drawer-end">
         <input
           ref={toggleRef}
-          id="gpts-drawer"
+          id="perknown-drawer"
           type="checkbox"
           className="drawer-toggle"
         />
-        <div className="drawer-content">
+        {/* <div className="drawer-content">
           {showButton && (
             <label
-              htmlFor="gpts-drawer"
+              htmlFor="perknown-drawer"
               className="text-sm btn btn-primary m-8">
-              Third-party GPTs
+              PerKnown
             </label>
           )}
-        </div>
+        </div> */}
         <div className="drawer-side">
           <label
-            htmlFor="gpts-drawer"
+            htmlFor="perknown-drawer"
             aria-label="close sidebar"
             className="drawer-overlay"></label>
 
-          <div className="bg-slate-50 fixed top-0 bottom-0 overflow-y-auto text-black px-4">
+          <div className="bg-slate-50 fixed top-0 bottom-0 overflow-y-auto text-black px-8">
             <div className="flex items-center px-4 pt-10 pb-4">
               <h2
                 className="text-2xl mr-2 font-bold cursor-pointer"
                 onClick={() => {}}>
-                Third-party GPTs
+                Here is PerKnown
               </h2>
               <div className="flex-1"></div>
               <a
                 className="text-primary"
                 href="https://gpts.works"
                 target="_blank">
-                View more 👉
+                Visit website 👉
               </a>
             </div>
+            <div>
+              {!clip && <Clipper setLoading={setLoading} setClip={setClip} />}
+              {/* {clip && <p>The button was clicked.</p>} */}
+              {clip && (
+                <p className="flex items-center px-6 pt-2 pb-2">
+                  Already Clipped !
+                </p>
+              )}
+            </div>
+            <div className="fixed bottom-3 left-0 right-0 w-full max-w-3xl mx-auto px-4">
+              <SearchChat
+                currentPage={currentPage}
+                webSearch={webSearch}
+                libQuery={libQuery}
+                clip={clip}
+                setLoading={setLoading}
+              />
+              {/* <button> */}
+              <ModeChoice
+                setCurrentPage={setCurrentPage}
+                setWebSearch={setWebSearch}
+                setLibQuery={setLibQuery}
+              />
 
-            <Search setGpts={setGpts} setLoading={setLoading} />
-
-            <GptsList gpts={gpts} loading={loading} />
+              {/* </button> */}
+              {/* <Chat /> */}
+              {/* <GptsList gpts={gpts} loading={loading} /> */}
+            </div>
           </div>
         </div>
       </div>
