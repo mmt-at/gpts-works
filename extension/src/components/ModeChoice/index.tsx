@@ -15,7 +15,7 @@ export default ({ setCurrentPage, setWebSearch, setLibQuery }: Props) => {
           id="CurrentPage"
           aria-label="Checkbox for a"
           className="btn w-4"
-          onChange={(e) => setCurrentPage(e.target.checked ? true : false)}
+          onChange={(e) => setCurrentPage(e.target.checked)}
         />
         <label htmlFor="CurrentPage" className="cursor-pointer">
           Current Page
@@ -28,7 +28,7 @@ export default ({ setCurrentPage, setWebSearch, setLibQuery }: Props) => {
           id="WebSearch"
           aria-label="Checkbox for b"
           className="btn w-4"
-          onChange={(e) => setWebSearch(e.target.checked ? true : false)}
+          onChange={(e) => setWebSearch(e.target.checked)}
         />
         <label htmlFor="WebSearch" className="cursor-pointer">
           Web Search
@@ -41,7 +41,7 @@ export default ({ setCurrentPage, setWebSearch, setLibQuery }: Props) => {
           id="LibQuery"
           aria-label="Checkbox for c"
           className="btn w-4"
-          onChange={(e) => setLibQuery(e.target.checked ? true : false)}
+          onChange={(e) => setLibQuery(e.target.checked)}
         />
         <label htmlFor="LibQuery" className="cursor-pointer">
           PerLib Query

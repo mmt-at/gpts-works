@@ -9,6 +9,7 @@ console.log(
 chrome.action.onClicked.addListener((tab) => {
   console.log("tab clicked", tab)
   if (tab.id) {
+    console.log("fuck tab id")
     sendToContentScript({
       name: "showSidebar",
       body: {}

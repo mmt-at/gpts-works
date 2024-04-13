@@ -33,8 +33,12 @@
   },
   "manifest": {
     "host_permissions": [
-      "https://gpts.works/*"
+      "https://*/*",
+      "http://*/*"
     ],
-    "permissions": []
+    "permissions": [
+      "cookies",
+      "tabs"
+    ]
   }
 }

@@ -2,18 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
-.text-primary {
-  color: #2752f4;
+/*.text-primary {*/
+/*  color: #2752f4;*/
+/*}*/
+
+/*.border-primary {*/
+/*  border-color: #2752f4;*/
+/*}*/
+
+/*.bg-panel {*/
+/*  background-color: #fff;*/
+/*}*/
+
+/*.dark .bg-panel {*/
+/*  background-color: #000;*/
+/*}*/
+
+/*#extension {*/
+/*  position: fixed;*/
+/*  right: 0;*/
+/*  top: 0;*/
+/*  width: 40px;*/
+/*  height: 100%;*/
+/*  background-color: #f4f4f4;*/
+/*  z-index: 1000;*/
+/*  transition: width 0.3s;*/
+/*}*/
+
+/*#extension .toggle-icon {*/
+/*  position: absolute;*/
+/*  left: -20px;*/
+/*  top: 50%;*/
+/*  cursor: pointer;*/
+/*}*/
+
+/*.plugin-maximized #extension {*/
+/*  width: 320px;*/
+/*}*/
+
+#plugin-maximized {
+  width: calc(75%) !important;
 }
 
-.border-primary {
-  border-color: #2752f4;
-}
-
-.bg-panel {
-  background-color: #fff;
-}
-
-.dark .bg-panel {
-  background-color: #000;
+.plugin-maximized {
+  width: calc(75%) !important;
 }
