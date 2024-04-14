@@ -2,21 +2,23 @@ import type {Chunk, MDss} from "~types/snapshot";
 import {getSupabase} from "~models/db";
 import {createClient} from "@supabase/supabase-js";
 
-export async function insertWholeMD({markdownContext, url}) {
+export async function insertWholeMD({markdownContext, chaosFullMD, url}) {
     const createdAt: string = new Date().toISOString();
-    // const uuid = self.crypto.randomUUID();
-    console.log("insertWholeMD")
+    const uuid = self.crypto.randomUUID();
+    console.log("insertWholeMD:", markdownContext)
 
     const supabase = await getSupabase();
     const {data, error} = await supabase
         .from('mdss')
         .insert([
             {
+                uuid: uuid,
                 web_url: url,
                 created_at: createdAt,
                 title: "title",
                 abstract: "abstract",
-                context: markdownContext
+                readableMD: markdownContext,
+                chaosFullMD: chaosFullMD
             },
         ])
         .select()

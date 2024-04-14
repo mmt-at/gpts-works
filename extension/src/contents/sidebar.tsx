@@ -34,7 +34,7 @@ export const getOverlayAnchor: PlasmoGetOverlayAnchor = async () =>
     document.querySelector("body")
 
 export default () => {
-    console.log("SUPABASE_URL", process.env.PLASMO_PUBLIC_SUPABASE_URL)
+    // console.log("SUPABASE_URL", process.env.PLASMO_PUBLIC_SUPABASE_URL)
     const [loading, setLoading] = useState(false)
     const toggleRef = useRef(null)
     const [currentPage, setCurrentPage] = useState(false)
@@ -145,6 +145,7 @@ export default () => {
                                                         setLoading={setLoading}
                                                     />
                                                     <ModeChoice
+                                                        clipped={clip}
                                                         setCurrentPage={setCurrentPage}
                                                         setWebSearch={setWebSearch}
                                                         setLibQuery={setLibQuery}

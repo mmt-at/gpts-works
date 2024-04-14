@@ -67,7 +67,7 @@ export default ({currentPage, webSearch, libQuery, clip, setLoading }: Props) =>
           <input
             type="text"
             className="flex-1 px-4 py-2 border-2 border-[#e5e8f3] bg-white rounded-lg"
-            placeholder="chat for searching GPTs"
+            placeholder="Chat with AI"
             ref={inputRef}
             value={content}
             disabled={inputDisabled}

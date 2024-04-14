@@ -1,12 +1,13 @@
 import type { Dispatch, SetStateAction } from "react"
 
 interface Props {
+    clipped: boolean
   setCurrentPage: Dispatch<SetStateAction<boolean>>
   setWebSearch: Dispatch<SetStateAction<boolean>>
   setLibQuery: Dispatch<SetStateAction<boolean>>
 }
 
-export default ({ setCurrentPage, setWebSearch, setLibQuery }: Props) => {
+export default ({ clipped, setCurrentPage, setWebSearch, setLibQuery }: Props) => {
   return (
     <div className="flex flex-row justify-center space-x-3">
       <div className="flex flex-row items-center space-x-2">
@@ -14,6 +15,7 @@ export default ({ setCurrentPage, setWebSearch, setLibQuery }: Props) => {
           type="checkbox"
           id="CurrentPage"
           aria-label="Checkbox for a"
+          disabled={!clipped}
           className="btn w-4"
           onChange={(e) => setCurrentPage(e.target.checked)}
         />
