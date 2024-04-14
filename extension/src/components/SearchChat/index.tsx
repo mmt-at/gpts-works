@@ -36,28 +36,28 @@ export default ({currentPage, webSearch, libQuery, clip, setLoading }: Props) =>
     }
   }
 
-  const searchGpts = async (question: string) => {
-    setLoading(true)
-    const resp = await sendToBackground({
-      name: "searchGpts",
-      body: {
-        question: question
-      }
-    })
-    setLoading(false)
-    if (resp && resp.data) {
-      // setGpts(resp.data)
-    } else {
-      // setGpts([])
-    }
-  }
+  // const searchGpts = async (question: string) => {
+  //   setLoading(true)
+  //   const resp = await sendToBackground({
+  //     name: "searchGpts",
+  //     body: {
+  //       question: question
+  //     }
+  //   })
+  //   setLoading(false)
+  //   if (resp && resp.data) {
+  //     // setGpts(resp.data)
+  //   } else {
+  //     // setGpts([])
+  //   }
+  // }
 
   const handleSubmit = async () => {
     if (!content) {
       return
     }
 
-    searchGpts(content)
+    // searchGpts(content)
   }
 
   return (

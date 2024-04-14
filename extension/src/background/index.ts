@@ -1,4 +1,5 @@
 import { sendToContentScript } from "@plasmohq/messaging"
+import process from "process";
 
 export {}
 
@@ -7,7 +8,7 @@ console.log(
 )
 
 chrome.action.onClicked.addListener((tab) => {
-  console.log("tab clicked", tab)
+  // console.log("SUPABASE_URL", process.env.PLASMO_PUBLIC_SUPABASE_URL)
   if (tab.id) {
     console.log("fuck tab id")
     sendToContentScript({

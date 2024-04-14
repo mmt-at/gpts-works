@@ -10,7 +10,8 @@ import GptsList from "~components/GptsList"
 import ModeChoice from "~components/ModeChoice"
 import Search from "~components/SearchChat"
 import SearchChat from "~components/SearchChat"
-import type {Gpts} from "~types/gpts"
+import * as process from "process";
+// import type {Gpts} from "~types/gpts"
 // import "@mantine/core/styles.css";
 // import globalCss from "data-text:@mantine/core/styles.css";
 
@@ -30,89 +31,6 @@ export const getStyle = () => {
 
 export const getOverlayAnchor: PlasmoGetOverlayAnchor = async () =>
     document.querySelector("body")
-
-function getPage() {
-    const [loading, setLoading] = useState(false)
-    const toggleRef = useRef(null)
-    const [currentPage, setCurrentPage] = useState(false)
-    const [webSearch, setWebSearch] = useState(false)
-    const [libQuery, setLibQuery] = useState(false)
-    const [clip, setClip] = useState(false)
-
-    return (
-        <div className="fixed top-0 right-0">
-            <div className="drawer open drawer-end">
-                <input
-                    ref={toggleRef}
-                    id="perknown-drawer"
-                    type="checkbox"
-                    className="drawer-toggle"
-                />
-                {/* <div className="drawer-content">
-          {showButton && (
-            <label
-              htmlFor="perknown-drawer"
-              className="text-sm btn btn-primary m-8">
-              PerKnown
-            </label>
-          )}
-        </div> */}
-                <div className="drawer-side">
-                    <label
-                        htmlFor="perknown-drawer"
-                        aria-label="close sidebar"
-                        className="drawer-overlay"></label>
-
-                    <div className="bg-slate-50 fixed top-0 bottom-0 overflow-y-auto text-black px-8">
-                        <div className="flex items-center px-4 pt-10 pb-4">
-                            <h2
-                                className="text-2xl mr-2 font-bold cursor-pointer"
-                                onClick={() => {
-                                }}>
-                                Here is PerKnown
-                            </h2>
-                            <div className="flex-1"></div>
-                            <a
-                                className="text-primary"
-                                href="https://www.perknown.com"
-                                target="_blank">
-                                Visit website 👉
-                            </a>
-                        </div>
-                        <div>
-                            {!clip && <Clipper setLoading={setLoading} setClip={setClip}/>}
-                            {/* {clip && <p>The button was clicked.</p>} */}
-                            {clip && (
-                                <p className="flex items-center px-6 pt-2 pb-2">
-                                    Already Clipped !
-                                </p>
-                            )}
-                        </div>
-                        <div className="fixed bottom-3 left-0 right-0 w-full max-w-3xl mx-auto px-4">
-                            <SearchChat
-                                currentPage={currentPage}
-                                webSearch={webSearch}
-                                libQuery={libQuery}
-                                clip={clip}
-                                setLoading={setLoading}
-                            />
-                            {/* <button> */}
-                            <ModeChoice
-                                setCurrentPage={setCurrentPage}
-                                setWebSearch={setWebSearch}
-                                setLibQuery={setLibQuery}
-                            />
-
-                            {/* </button> */}
-                            {/* <Chat /> */}
-                            {/* <GptsList gpts={gpts} loading={loading} /> */}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
-}
 
 export default () => {
     const [loading, setLoading] = useState(false)
@@ -141,6 +59,8 @@ export default () => {
     const [previous, setPrevious] = useState("");
     useEffect(() => {
         if (isExpanded) {
+            console.log("SUPABASE_URL", process.env.PLASMO_PUBLIC_SUPABASE_URL)
+            alert(process.env.PLASMO_PUBLIC_SUPABASE_URL)
 //             const style = document.createElement("style")
 //             style.textContent =`
 //   .plugin-maximized {
@@ -211,12 +131,13 @@ export default () => {
                                                     </a>
                                                 </div>
                                                 <div>
-                                                    {!clip && <Clipper setLoading={setLoading} setClip={setClip}/>}
-                                                    {clip && (
-                                                        <p className="flex items-center px-6 pt-2 pb-2">
-                                                            Already Clipped !
-                                                        </p>
-                                                    )}
+                                                    <Clipper clipped={clip} setLoading={setLoading} setClip={setClip}/>
+                                                    {/*{!clip && <Clipper setLoading={setLoading} setClip={setClip}/>}*/}
+                                                    {/*{clip && (*/}
+                                                    {/*    <p className="flex items-center px-6 pt-2 pb-2">*/}
+                                                    {/*        Already Clipped !*/}
+                                                    {/*    </p>*/}
+                                                    {/*)}*/}
                                                 </div>
                                                 <div
                                                     className="fixed bottom-3 w-1/4 right-0 max-w-3xl mx-auto px-4">

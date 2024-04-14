@@ -3,16 +3,21 @@
 import * as turndownPluginGfm from "joplin-turndown-plugin-gfm"
 import type {Dispatch, SetStateAction} from "react"
 import TurndownService from "turndown"
+import { createClient } from '@supabase/supabase-js'
 // import {JSDOM} from 'jsdom';
 // import Readability from '@mozilla/readability';
-import {sendToBackground} from "@plasmohq/messaging"
+// import {sendToBackground} from "@plasmohq/messaging"
+import {insertWholeMD} from "~models/doc";
+import {sendToBackground} from "@plasmohq/messaging";
+// import {getDb} from "~models/db";
 
 interface Props {
+    clipped: boolean
     setClip: Dispatch<SetStateAction<boolean>>
     setLoading: Dispatch<SetStateAction<boolean>>
 }
 
-export default function ({setClip, setLoading}: Props) {
+export default function ({clipped, setClip, setLoading}: Props) {
     const handleClip = async function () {
         setClip(true)
         const turndownService = new TurndownService({
@@ -52,7 +57,7 @@ export default function ({setClip, setLoading}: Props) {
         for (let i = 0; i < allElements.length; i++) {
             allElements[i].removeAttribute('class');
         }
-        const markdown = turndownService.turndown(body.innerHTML);
+        const markdown: string = turndownService.turndown(body.innerHTML);
 
         // const dom = new JSDOM(document, {url:document.URL});
         //
@@ -67,11 +72,24 @@ export default function ({setClip, setLoading}: Props) {
         //
         // // 使用 TurndownService 来将 HTML 转换为 Markdown
         // const markdown = turndownService.turndown(article?.content || '');
+
+        setLoading(true)
+        const resp1 = await sendToBackground({
+            name: "fullClip",
+            body: {
+                data: markdown,
+            }
+        })
+        setLoading(false)
+        const supabaseRes = await insertWholeMD({
+                markdownContext: markdown,
+                url: document.URL
+            });
         setLoading(true)
         const resp = await sendToBackground({
             name: "fullClip",
             body: {
-                data: markdown
+                data: supabaseRes,
             }
         })
         setLoading(false)
@@ -79,11 +97,12 @@ export default function ({setClip, setLoading}: Props) {
         if (resp && resp.data) {
             alert(document.URL + " Clip Success")
         }
-        // setClip(false)
     }
+
     return (
         <button
             className="btn btn-block flex items-center px-6 pt-2 pb-2"
+            disabled={clipped}
             onClick={handleClip}>
             Current Page Clip
         </button>
