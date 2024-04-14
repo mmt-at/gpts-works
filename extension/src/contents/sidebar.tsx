@@ -18,8 +18,9 @@ import SearchChat from "~components/SearchChat"
 export const config: PlasmoCSConfig = {
     // matches: ["https://chat.openai.com/*"]
     matches: ["<all_urls>"],
-    css: ["../style.css"]
+    // css: ["../style.css"]
 }
+// css: ["../style.css"]这一行css是为了修bug, 但是会改变原有网页样式，而且现在突然又没有原来的bug了....很无语
 
 export const getStyle = () => {
     const style = document.createElement("style")
@@ -61,7 +62,7 @@ export default () => {
     useEffect(() => {
         if (isExpanded) {
             console.log("SUPABASE_URL", process.env.PLASMO_PUBLIC_SUPABASE_URL)
-            alert(process.env.PLASMO_PUBLIC_SUPABASE_URL)
+            // alert(process.env.PLASMO_PUBLIC_SUPABASE_URL)
 //             const style = document.createElement("style")
 //             style.textContent =`
 //   .plugin-maximized {
@@ -70,20 +71,14 @@ export default () => {
 //   // 添加更多自定义样式
 // `
             const css = `.plugin-maximized {
-  width: calc(100% - 320px) !important;
+  width: calc(75%) !important;
 }`;
 
             const head = document.head || document.getElementsByTagName('head')[0];
             const style = document.createElement('style');
             head.appendChild(style);
 
-            style.type = 'text/css';
-            if (style.style){
-                // This is required for IE8 and below.
-                style.style.cssText = css;
-            } else {
-                style.appendChild(document.createTextNode(css));
-            }
+            style.appendChild(document.createTextNode(css));
             document.body.classList.add("plugin-maximized");
             // if (toggleRef && toggleRef.current) {
             //     // fetchGpts()
@@ -93,7 +88,7 @@ export default () => {
             // document.body.style.content += ' .plugin-maximized { width: calc(100% - 320px) !important; } '
             // document.body.className += " plugin-maximized";
         } else {
-          // document.body.className = previous
+            // document.body.className = previous
             document.body.classList.remove("plugin-maximized");
         }
     }, [isExpanded]);
