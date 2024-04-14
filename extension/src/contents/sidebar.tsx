@@ -10,7 +10,7 @@ import GptsList from "~components/GptsList"
 import ModeChoice from "~components/ModeChoice"
 import Search from "~components/SearchChat"
 import SearchChat from "~components/SearchChat"
-import * as process from "process";
+// import * as process from "process";
 // import type {Gpts} from "~types/gpts"
 // import "@mantine/core/styles.css";
 // import globalCss from "data-text:@mantine/core/styles.css";
@@ -33,6 +33,7 @@ export const getOverlayAnchor: PlasmoGetOverlayAnchor = async () =>
     document.querySelector("body")
 
 export default () => {
+    console.log("SUPABASE_URL", process.env.PLASMO_PUBLIC_SUPABASE_URL)
     const [loading, setLoading] = useState(false)
     const toggleRef = useRef(null)
     const [currentPage, setCurrentPage] = useState(false)
