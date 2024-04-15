@@ -9,21 +9,30 @@ import type {
 import { useRef, useState } from "react"
 
 import { sendToBackground } from "@plasmohq/messaging"
+import {getStreamOpenAI} from "~facility/chat/chat"
 
 interface Props {
   currentPage: boolean;
   webSearch: boolean;
   libQuery: boolean;
   clip: boolean;
+  setUserInput: Dispatch<SetStateAction<string>>;
+  lastMsg: string;
+  setLastMsg: Dispatch<SetStateAction<string|null>>;
+  lastMsgEnd: boolean
+  setLastMsgEnd :Dispatch<SetStateAction<boolean>>;
   setLoading: Dispatch<SetStateAction<boolean>>;
 }
 
-export default ({currentPage, webSearch, libQuery, clip, setLoading }: Props) => {
+export default function SearchChat({currentPage, webSearch, libQuery, clip, setUserInput,lastMsg, setLastMsg, lastMsgEnd, setLastMsgEnd, setLoading }: Props) {
   const [inputDisabled, setInputDisabled] = useState(false)
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [content, setContent] = useState("")
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if(!lastMsgEnd) {
+      setLastMsgEnd(false)
+    }
     setContent(e.target.value)
   }
 
@@ -53,11 +62,24 @@ export default ({currentPage, webSearch, libQuery, clip, setLoading }: Props) =>
   // }
 
   const handleSubmit = async () => {
-    if (!content) {
-      return
+    console.log(content, ":fuck click")
+    if (content) {
+      setUserInput(content)
+      setLastMsg(content)
+      setLastMsgEnd(true)
+      setInputDisabled(true)
+      setContent("")
+      const stream = await getStreamOpenAI(content)
+      setLastMsgEnd(false)
+      for await (const chunk of stream) {
+        const lastContent = chunk.choices[0]?.delta?.content
+        if(lastContent) {
+          setLastMsg(lastMsg + chunk.choices[0]?.delta?.content || '')
+        }
+      }
+      setLastMsgEnd(true)
+      setInputDisabled(false)
     }
-
-    // searchGpts(content)
   }
 
   return (

@@ -6,10 +6,11 @@ import {sendToBackground} from "@plasmohq/messaging"
 import {useMessage} from "@plasmohq/messaging/hook"
 
 import Clipper from "~components/Clipper"
-import GptsList from "~components/GptsList"
+// import GptsList from "~components/GptsList"
 import ModeChoice from "~components/ModeChoice"
 import Search from "~components/SearchChat"
 import SearchChat from "~components/SearchChat"
+import ChatPage from "~components/Chat/ChatPage";
 // import * as process from "process";
 // import type {Gpts} from "~types/gpts"
 // import "@mantine/core/styles.css";
@@ -41,6 +42,9 @@ export default () => {
     const [webSearch, setWebSearch] = useState(false)
     const [libQuery, setLibQuery] = useState(false)
     const [clip, setClip] = useState(false)
+    const [lastRole, setLastRole] = useState("user")
+    const [lastMsg, setLastMsg] = useState<string|null>(null)
+    const [lastMsgEnd, setLastMsgEnd] = useState<boolean>(true)
 
     useMessage<string, string>(async (req, res) => {
         if (req.name === "showSidebar") {
@@ -59,6 +63,7 @@ export default () => {
     // }, [window.location.href])
     const [isExpanded, setIsExpanded] = useState(false);
     const [previous, setPrevious] = useState("");
+    const [userInput, setUserInput] = useState("")
     useEffect(() => {
         if (isExpanded) {
             console.log("SUPABASE_URL", process.env.PLASMO_PUBLIC_SUPABASE_URL)
@@ -135,6 +140,10 @@ export default () => {
                                                     {/*    </p>*/}
                                                     {/*)}*/}
                                                 </div>
+
+                                                <div className="px-6">
+                                                    <ChatPage lastRole={lastRole} lastMsg={lastMsg} lastMsgEnd={lastMsgEnd}/>
+                                                </div>
                                                 <div
                                                     className="fixed bottom-3 w-1/4 right-0 max-w-3xl mx-auto px-4">
                                                     <SearchChat
@@ -142,6 +151,11 @@ export default () => {
                                                         webSearch={webSearch}
                                                         libQuery={libQuery}
                                                         clip={clip}
+                                                        setUserInput={setUserInput}
+                                                        lastMsg={lastMsg}
+                                                        setLastMsg={setLastMsg}
+                                                        lastMsgEnd={lastMsgEnd}
+                                                        setLastMsgEnd={setLastMsgEnd}
                                                         setLoading={setLoading}
                                                     />
                                                     <ModeChoice

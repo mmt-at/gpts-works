@@ -2,7 +2,7 @@
 module.exports = {
   mode: "jit",
   darkMode: "class",
-  content: ["./**/*.tsx"],
+  content: ["./**/*.tsx", "./src/**/*.{tsx, html}"],
   theme: {
     extend: {
       backgroundImage: {

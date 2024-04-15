@@ -1,9 +1,16 @@
 import OpenAI from "openai";
-import * as process from "process";
+
+let openai: OpenAI;
 
 export function getOpenAIClient(): OpenAI {
-    return new OpenAI({
-            apiKey: process.env["OPENAI_API_KEY"],
-            baseURL: process.env["API_BASE_URL"]
+    if (!openai) {
+        console.log("url:", process.env.PLASMO_PUBLIC_API_BASE_URL)
+        console.log("supa:", process.env.PLASMO_PUBLIC_SUPABASE_URL)
+        openai = new OpenAI({
+            apiKey: process.env.PLASMO_PUBLIC_OPENAI_API_KEY,
+            baseURL: process.env.PLASMO_PUBLIC_API_BASE_URL,
+            dangerouslyAllowBrowser: true
         });
+    }
+    return openai;
 }

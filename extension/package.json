@@ -45,8 +45,10 @@
       "http://*/*"
     ],
     "permissions": [
+      "activeTab",
       "cookies",
-      "tabs"
+      "tabs",
+      "sidePanel"
     ]
   }
 }
